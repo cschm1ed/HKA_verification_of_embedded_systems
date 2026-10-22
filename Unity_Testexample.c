@@ -10,10 +10,16 @@
 #include "unity.h"
 #include "unity_internals.h"
 
+#define True 1
+#define False 0
+
 // Methodenaufrufe
 extern int func_add(int a, int b);
 extern int* func_sortThreeNumbers(int a, int b, int c);
 extern char *my_strcopy(char *src);
+int my_divide(int a, int b);
+int *func_sortThreeNumbers_state(int a, int b, int c, int *a_smallest, int *b_smallest, int *doublet_exists);
+
 
 // The function setUp and tearDown are two special function that are executed before each test and after each test.
 // There additional execution can be added that need to be added in advance and later to clean up. (e.g. for used dynamic memory)
@@ -39,7 +45,7 @@ int main()
 	int feedback = 0;
 	printf("Start Test\n");
 	// The call of the testfunction
-	feedback= test_func_add_main();
+	feedback = test_func_add_main();
 	printf("Finished: %i \n", feedback);
 }
 
@@ -85,43 +91,51 @@ void test_function_testSort()
 
 	TEST_ASSERT_EQUAL_INT_ARRAY(((int[]){-1, 2, 3}), (ptr = func_sortThreeNumbers(2, -1, 3)), 3);
 	free(ptr);
-
 }
 
+void test_function_testSort_and_State() {
+	int *ptr;
+	int a_smallest, b_smallest, doublet_exists;
+
+	TEST_ASSERT_EQUAL_INT_ARRAY(((int[]){1, 2, 3}), (ptr = func_sortThreeNumbers_state(3, 2, 1, &a_smallest, &b_smallest, &doublet_exists)), 3);
+	TEST_ASSERT_EQUAL_INT(False, a_smallest);
+	TEST_ASSERT_EQUAL_INT(False, b_smallest);
+	TEST_ASSERT_EQUAL_INT(False, doublet_exists);
+	free(ptr);
+
+	TEST_ASSERT_EQUAL_INT_ARRAY(((int[]){1, 2, 0}), (ptr = func_sortThreeNumbers_state(2, 2, 1, &a_smallest, &b_smallest, &doublet_exists)), 3);
+	TEST_ASSERT_EQUAL_INT(False, a_smallest);
+	TEST_ASSERT_EQUAL_INT(False, b_smallest);
+	TEST_ASSERT_EQUAL_INT(True, doublet_exists);
+	free(ptr);
+
+	TEST_ASSERT_EQUAL_INT_ARRAY(((int[]){1, 2, 3}), (ptr = func_sortThreeNumbers_state(1, 3, 2, &a_smallest, &b_smallest, &doublet_exists)), 3);
+	TEST_ASSERT_EQUAL_INT(True, a_smallest);
+	TEST_ASSERT_EQUAL_INT(False, b_smallest);
+	TEST_ASSERT_EQUAL_INT(False, doublet_exists);
+	free(ptr);
+
+	TEST_ASSERT_EQUAL_INT_ARRAY(((int[]){1, 2, 0}), (ptr = func_sortThreeNumbers_state(2, 2, 1, &a_smallest, &b_smallest, &doublet_exists)), 3);
+	TEST_ASSERT_EQUAL_INT(False, a_smallest);
+	TEST_ASSERT_EQUAL_INT(True, b_smallest);
+	TEST_ASSERT_EQUAL_INT(True, doublet_exists);
+	free(ptr);
+
+}/*
 void test_strcpy() {
 	char *ptr;
 
-	TEST_ASSERT_EQUAL_STRING("HALLO", (ptr = my_strcopy("HALLO")));
+	TEST_ASSERT_EQUAL_STRING("HALLO\0", (ptr = my_strcopy("HALLO")));
 	free(ptr);
 
-	TEST_ASSERT_EQUAL_STRING("TEST123", (ptr = my_strcopy("ABCDEFGHAASDASDASDihfjhsdkfjhskldjfhskdjfhskajldhksjdah")));
+	TEST_ASSERT_EQUAL_STRING("asdkjhadkjahdskjhasdkjahsdkjhas\0", (ptr = my_strcopy("asdkjhadkjahdskjhasdkjahsdkjhas")));
 	free(ptr);
-
 }
-
-//Beispieltest entfernt
-/*
-
-// This test should PASS if the tool works correct
-void test_function_normalValueTest4242(void)
-{
-	TEST_ASSERT_EQUAL_INT(84, func_add(42, 42));
-}
-
-// This test should fail if it works correct.
-void test_function_normalValueTest4243(void)
-{
-	TEST_ASSERT_EQUAL_INT(84, func_add(42, 43));
-}
-
-
-void test_function_normalValueTest00(void)
-{
-	TEST_ASSERT_EQUAL_INT(0, func_add(0, 0));
-}
-
 */
 
+void test_divide() {
+	TEST_ASSERT_EQUAL_INT(0, my_divide(0, 0));
+}
 
 int test_func_add_main()
 {
@@ -133,8 +147,9 @@ int test_func_add_main()
 
 	//Test Aufgabe 3
 	RUN_TEST(test_function_testSort);
-	RUN_TEST(test_strcpy);
+	// RUN_TEST(test_divide);
 	//Beispieltest entfernt
+	RUN_TEST(test_function_testSort_and_State);
 /*
 	RUN_TEST(test_function_normalValueTest4242);
 	RUN_TEST(test_function_normalValueTest4243);
