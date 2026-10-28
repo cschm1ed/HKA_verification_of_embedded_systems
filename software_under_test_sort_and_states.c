@@ -3,23 +3,44 @@
 
 #include "mytests.h"
 
+// Methode zur Sortierung von drei Zahlen wobei doppelt vorkommende Zahlen durch 0 ersetzt werden
+// Aufgabe 3
 int* func_sortThreeNumbers(int a, int b, int c)
 {
+	// Umgebung
+	int i, j, temp;
+	bool printfOutput = true;
+
+	// Array Werte zuweisen
 	int* array = malloc(3 *sizeof(int));
 	int array_size = 3;
 
-	//Werte zuweisen
 	array[0] = a;
 	array[1] = b;
 	array[2] = c;
 
+	// Augabe zur Kontrolle
+	if (printfOutput)
+	{
+		printf("Array Ausgabe vor Sortierung: ");
+		for (i = 0; i < (array_size); ++i)
+		{
+			printf("%i; ", array[i]);
+		}
+		printf("\n");
+	}
 
-	int i, j, temp;
+	// Sortierung der Zahlen und Ersetzung von Dubletten 
 	for (i = 0; i < (array_size - 1); ++i)
 	{
 		for (j = 0; j < array_size - 1 - i; ++j )
 		{
-			if (array[j] > array[j+1])
+			if (array[j] == array[j + 1] && array[i] != 0)
+            {
+				array[j] = 0;
+			}
+
+			if (array[j] < array[j + 1])
 			{
 				temp = array[j+1];
 				array[j+1] = array[j];
@@ -28,16 +49,15 @@ int* func_sortThreeNumbers(int a, int b, int c)
 		}
 	}
 
-	if (array[0] == array[1])
+	// Augabe zur Kontrolle
+	if (printfOutput)
 	{
-		int tmp = array[2];
-		array[2] = 0;
-		array[1] = tmp;
-	}
-
-	if (array[1] == array[2])
-	{
-		array[2] = 0;
+		printf("Array Ausgabe nach Sortierung:");
+		for (i = 0; i < (array_size); ++i)
+		{
+			printf("%i; ", array[i]);
+		}
+		printf("\n\n");
 	}
 
 	return array;

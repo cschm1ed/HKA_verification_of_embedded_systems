@@ -24,22 +24,19 @@ void test_function_testSort()
 {
 	int *ptr;
 
-	TEST_ASSERT_EQUAL_INT_ARRAY(((int[]){1, 2, 3}), (ptr = func_sortThreeNumbers(3, 2, 1)), 3);
+	TEST_ASSERT_EQUAL_INT_ARRAY(((int[]){3, 2, 1}), (ptr = func_sortThreeNumbers(3, 2, 1)), 3);
 	free(ptr);
 
-	TEST_ASSERT_EQUAL_INT_ARRAY(((int[]){1, 2, 0}), (ptr = func_sortThreeNumbers(2, 2, 1)), 3);
+	TEST_ASSERT_EQUAL_INT_ARRAY(((int[]){2, 1, 0}), (ptr = func_sortThreeNumbers(2, 2, 1)), 3);
 	free(ptr);
 
-	TEST_ASSERT_EQUAL_INT_ARRAY(((int[]){-1, 2, 3}), (ptr = func_sortThreeNumbers(2, -1, 3)), 3);
+	TEST_ASSERT_EQUAL_INT_ARRAY(((int[]){3, 2, -1}), (ptr = func_sortThreeNumbers(2, -1, 3)), 3);
 	free(ptr);
 
-	TEST_ASSERT_EQUAL_INT_ARRAY(((int[]){INT_MIN, 0, INT_MAX}), (ptr = func_sortThreeNumbers(INT_MAX, 0, INT_MIN)), 3);
+	TEST_ASSERT_EQUAL_INT_ARRAY(((int[]){INT_MAX, 0, INT_MIN}), (ptr = func_sortThreeNumbers(INT_MIN, 0, INT_MAX)), 3);
 	free(ptr);
 
-	TEST_ASSERT_EQUAL_INT_ARRAY(((int[]){4, 7, 0}), (ptr = func_sortThreeNumbers(4, 4, 7)), 3);
-	free(ptr);
-
-	TEST_ASSERT_EQUAL_INT_ARRAY(((int[]){-1, 2, 3}), (ptr = func_sortThreeNumbers(2, -1, 3)), 3);
+	TEST_ASSERT_EQUAL_INT_ARRAY(((int[]){7, 4, 0}), (ptr = func_sortThreeNumbers(4, 4, 7)), 3);
 	free(ptr);
 }
 
