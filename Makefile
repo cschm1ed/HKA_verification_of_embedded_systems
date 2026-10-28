@@ -20,7 +20,9 @@ $(NAME):
 	$(CC) $(UNITY) $(SRCS_2) -o $(N2)
 	$(CC) $(UNITY) $(SRCS_3) -o $(N3)
 	@echo "Erstellte executables: $(N1) $(N2) $(N3)"
-
+	./$(N1)
+	./$(N2)
+	./$(N3)
 
 clean:
 	@rm -f $(N1) $(N2) $(N3)
