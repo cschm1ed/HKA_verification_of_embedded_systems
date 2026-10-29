@@ -2,6 +2,8 @@
 
 #include "mytests.h"
 
-int my_divide(int a, int b) {
+// Methode zur Division von zwei Zahlen
+int my_divide(int a, int b) 
+{
     return a / b;
 }
