@@ -9,7 +9,7 @@ int* func_sortThreeNumbers(int a, int b, int c)
 {
 	// Umgebung
 	int i, j, temp;
-	bool printfOutput = true;
+	int printfOutput = True;
 
 	// Array Werte zuweisen
 	int* array = malloc(3 *sizeof(int));
