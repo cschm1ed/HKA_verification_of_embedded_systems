@@ -38,6 +38,9 @@ void test_function_testSort()
 
 	TEST_ASSERT_EQUAL_INT_ARRAY(((int[]){7, 4, 0}), (ptr = func_sortThreeNumbers(4, 4, 7)), 3);
 	free(ptr);
+
+	TEST_ASSERT_EQUAL_INT_ARRAY(((int[]){3, 0, -1}), (ptr = func_sortThreeNumbers(3, 3, 3)), 3);
+	free(ptr);
 }
 
 void test_function_testSort_and_State() {
@@ -88,6 +91,45 @@ void test_function_testSort_and_State() {
 		free(ptr);
 	}
 	
+}
+
+/*
+  0 ------> 1 --------> 2 ----------|
+  |	  i=2		      		i>20    |
+  -----------------------------------
+*/
+void test_function_Zustaende()
+{
+	int zustandSimulation = 0;
+
+	for (size_t i = 0; i < 25; i++)
+	{
+		if (zustandSimulation == 0){
+			if (i == 2)
+			{
+				TEST_ASSERT_EQUAL_INT(1, (zustandSimulation = Zustaende(i)));
+			}
+			else
+			{
+				TEST_ASSERT_EQUAL_INT(0, (zustandSimulation = Zustaende(i)));
+			}
+		}
+		else if (zustandSimulation == 1)
+		{
+			TEST_ASSERT_EQUAL_INT(2, (zustandSimulation = Zustaende(i)));
+		}
+		else if (zustandSimulation == 2)
+		{
+			if (i > 20)
+			{
+				TEST_ASSERT_EQUAL_INT(0, (zustandSimulation = Zustaende(i)));
+			}
+			else
+			{
+				TEST_ASSERT_EQUAL_INT(2, (zustandSimulation = Zustaende(i)));
+			}
+		}
+	}	
 }
 
 int test_func_add_main()

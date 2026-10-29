@@ -65,6 +65,7 @@ int* func_sortThreeNumbers(int a, int b, int c)
 
 int *func_sortThreeNumbers_state(int a, int b, int c, int *a_smallest, int *b_smallest, int *doublet_exists)
 {
+	
 	int* array = malloc(3 *sizeof(int));
 	int array_size = 3;
 
@@ -113,6 +114,30 @@ int *func_sortThreeNumbers_state(int a, int b, int c, int *a_smallest, int *b_sm
 	if (a == b || a == c || b == c)
 		*doublet_exists = True;
 
-
 	return array;
+}
+
+int Zustaende(int input)
+{
+	static int zustand = 0;
+	
+	switch (zustand)
+	{
+	case 0:
+		if (input == 2)
+			zustand = 1;
+		break;
+	case 1:
+		zustand = 2;
+		break;
+	case 2:
+		if (input > 20)
+			zustand = 0;
+			break;
+	default:
+		zustand = 0;
+		break;
+	}
+
+	return zustand;
 }
