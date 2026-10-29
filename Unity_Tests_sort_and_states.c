@@ -43,7 +43,17 @@ void test_function_testSort()
 void test_function_testSort_and_State() {
 	int *ptr;
 	int a_smallest, b_smallest, doublet_exists;
+	int expectedA[5] = {1, 1, 1, 1, 1}, 
+		expectedB[5] = {2, 2, 2, 2, 2}, 
+		expectedC[5] = {3, 0, 3, 0, 0};
+	int expectedASmallest[5] = {False, False, True, False, False}, 
+		expectedBSmallest[5] = {False, False, False, False, True}, 
+		expectedDoubletExists[5] = {False, True, False, True, True};
+	int inputA[5] = {3, 2, 1, 2, 2}, 
+		inputB[5] = {2, 2, 3, 2, 2}, 
+		inputC[5] = {1, 1, 2, 1, 1};
 
+	/*
 	TEST_ASSERT_EQUAL_INT_ARRAY(((int[]){1, 2, 3}), (ptr = func_sortThreeNumbers_state(3, 2, 1, &a_smallest, &b_smallest, &doublet_exists)), 3);
 	TEST_ASSERT_EQUAL_INT(False, a_smallest);
 	TEST_ASSERT_EQUAL_INT(False, b_smallest);
@@ -67,6 +77,17 @@ void test_function_testSort_and_State() {
 	TEST_ASSERT_EQUAL_INT(True, b_smallest);
 	TEST_ASSERT_EQUAL_INT(True, doublet_exists);
 	free(ptr);
+	*/
+
+	for (size_t i = 0; i < 5; i++)
+	{
+		TEST_ASSERT_EQUAL_INT_ARRAY(((int[]){expectedA[i], expectedB[i], expectedC[i]}), (ptr = func_sortThreeNumbers_state(inputA[i], inputB[i], inputC[i], &a_smallest, &b_smallest, &doublet_exists)), 3);
+		TEST_ASSERT_EQUAL_INT(expectedASmallest[i], a_smallest);
+		TEST_ASSERT_EQUAL_INT(expectedBSmallest[i], b_smallest);
+		TEST_ASSERT_EQUAL_INT(expectedDoubletExists[i], doublet_exists);
+		free(ptr);
+	}
+	
 }
 
 int test_func_add_main()
