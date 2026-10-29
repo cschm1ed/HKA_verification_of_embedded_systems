@@ -18,5 +18,6 @@ extern char *my_strcopy(char *src);
 int my_divide(int a, int b);
 int *func_sortThreeNumbers_state(int a, int b, int c, int *a_smallest, int *b_smallest, int *doublet_exists);
 int test_func_add_main();
+char *my_srtdup(char *src);
 
 #endif
