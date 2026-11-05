@@ -141,24 +141,37 @@ void test_function_Zustaende()
 	printf("\n");
 }
 
-void test_function_ZustaendeGezielt()
+void test_function_ZustaendeGezielt1()
 {
 	int zustandSimulation = 0;
 
 	TEST_ASSERT_EQUAL_INT(0, (Zustaende(0)));
 
-	for (int i = INT32_MIN; i <= INT32_MAX; i++) {
+	for (int i = INT32_MIN; i <= INT32_MAX - 997; i = i + 997) {
+		//printf("%i\n", i);
 		if (i != 2)
 			TEST_ASSERT_EQUAL_INT(0, (zustandSimulation = Zustaende(i)));
 	}
 	TEST_ASSERT_EQUAL_INT(1, (zustandSimulation = Zustaende(2)));
-	printf("Zustand 0 done\n");
-	for (int i = INT32_MIN; i <= INT32_MAX; i++) {
+}
+
+void test_function_ZustaendeGezielt2()
+{
+	int zustandSimulation = 0;
+
+	for (int i = INT32_MIN; i <= INT32_MAX - 997; i = i + 997) {
+		//printf("%i\n", i);
 		set_to_1();
 		TEST_ASSERT_EQUAL_INT(2, (zustandSimulation = Zustaende(i)));
 	}
-	printf("Zustand 1 done\n");
-	for (int i = INT32_MIN; i <= INT32_MAX; i++) {
+}
+
+void test_function_ZustaendeGezielt3()
+{
+	int zustandSimulation = 0;
+
+	for (int i = INT32_MIN; i <= INT32_MAX - 997; i = i + 997) {
+		//printf("%i\n", i);
 		set_to_2();
 		if (i <= 20)
 			TEST_ASSERT_EQUAL_INT(2, (zustandSimulation = Zustaende(i)));
@@ -175,12 +188,10 @@ void set_to_1() {
 	} else if (zustandSimulation == 1) {
 	} else {
 		zustandSimulation = Zustaende(21);
+		zustandSimulation = Zustaende(2);
 	}
 
-	if (zustandSimulation != 1)
-	{
-		printf("Zstand fehlgeschlagen");
-	}
+	TEST_ASSERT_EQUAL_INT(1, zustandSimulation);
 	return ;
 }
 
@@ -200,8 +211,7 @@ void set_to_2() {
 		;
 	}
 
-	if (zustandSimulation != 2)
-		printf("Error: Zustand set to 2 fehlgeschlagen\n");
+	TEST_ASSERT_EQUAL_INT(2, zustandSimulation);
 	return ;
 
 }
@@ -211,7 +221,9 @@ int test_func_add_main()
 	UNITY_BEGIN();
 	//RUN_TEST(test_function_testSort);
 	//RUN_TEST(test_function_testSort_and_State);
-	//RUN_TEST(test_function_Zustaende);
-	RUN_TEST(test_function_ZustaendeGezielt);
+	RUN_TEST(test_function_Zustaende);
+	RUN_TEST(test_function_ZustaendeGezielt1);
+	RUN_TEST(test_function_ZustaendeGezielt2);
+	RUN_TEST(test_function_ZustaendeGezielt3);
 	return UNITY_END();
 }
