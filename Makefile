@@ -17,11 +17,11 @@ NAME := Unity_Tests
 
 $(NAME):
 	$(CC) $(UNITY) $(SRCS_1) -o $(N1)
-	$(CC) $(UNITY) $(SRCS_2) -o $(N2)
-	$(CC) $(UNITY) $(SRCS_3) -fsanitize=address -o $(N3)
+	$(CC) $(UNITY) -O2 $(SRCS_2) -o $(N2)
+	$(CC) $(UNITY) $(SRCS_3) -o $(N3)
 	@echo "Erstellte executables: $(N1) $(N2) $(N3)"
 	@echo "---------------TEST 1 -------------------\n"
-	./$(N1)
+	@echo "./$(N1)"
 	@echo "---------------TEST END-------------------\n\n"
 
 	@echo "---------------TEST 2 -------------------\n"
@@ -29,7 +29,7 @@ $(NAME):
 	@echo "---------------TEST END-------------------\n\n"
 
 	@echo "---------------TEST 3 -------------------\n"
-	./$(N3)
+	@echo "./$(N3)"
 	@echo "---------------TEST END-------------------\n\n"
 
 

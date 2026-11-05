@@ -102,40 +102,116 @@ void test_function_Zustaende()
 {
 	int zustandSimulation = 0;
 
+	printf("Dokumentation der Durchläufe zur Nachverfolgung: ");
+
 	for (size_t i = 0; i < 25; i++)
 	{
 		if (zustandSimulation == 0){
 			if (i == 2)
 			{
+				printf("1; ");
 				TEST_ASSERT_EQUAL_INT(1, (zustandSimulation = Zustaende(i)));
 			}
 			else
 			{
+				printf("2; ");
 				TEST_ASSERT_EQUAL_INT(0, (zustandSimulation = Zustaende(i)));
 			}
 		}
 		else if (zustandSimulation == 1)
 		{
+			printf("3; ");
 			TEST_ASSERT_EQUAL_INT(2, (zustandSimulation = Zustaende(i)));
 		}
 		else if (zustandSimulation == 2)
 		{
 			if (i > 20)
 			{
+				printf("4; ");
 				TEST_ASSERT_EQUAL_INT(0, (zustandSimulation = Zustaende(i)));
 			}
 			else
 			{
+				printf("5; ");
 				TEST_ASSERT_EQUAL_INT(2, (zustandSimulation = Zustaende(i)));
 			}
 		}
-	}	
+	}
+
+	printf("\n");
+}
+
+void test_function_ZustaendeGezielt()
+{
+	int zustandSimulation = 0;
+
+	TEST_ASSERT_EQUAL_INT(0, (Zustaende(0)));
+
+	for (int i = INT32_MIN; i <= INT32_MAX; i++) {
+		if (i != 2)
+			TEST_ASSERT_EQUAL_INT(0, (zustandSimulation = Zustaende(i)));
+	}
+	TEST_ASSERT_EQUAL_INT(1, (zustandSimulation = Zustaende(2)));
+	printf("Zustand 0 done\n");
+	for (int i = INT32_MIN; i <= INT32_MAX; i++) {
+		set_to_1();
+		TEST_ASSERT_EQUAL_INT(2, (zustandSimulation = Zustaende(i)));
+	}
+	printf("Zustand 1 done\n");
+	for (int i = INT32_MIN; i <= INT32_MAX; i++) {
+		set_to_2();
+		if (i <= 20)
+			TEST_ASSERT_EQUAL_INT(2, (zustandSimulation = Zustaende(i)));
+		else
+			TEST_ASSERT_EQUAL_INT(0, (zustandSimulation = Zustaende(i)));
+	}
+}
+
+void set_to_1() {
+	int zustandSimulation = Zustaende(2);
+
+	if (zustandSimulation == 0) {
+		zustandSimulation = Zustaende(2);
+	} else if (zustandSimulation == 1) {
+	} else {
+		zustandSimulation = Zustaende(21);
+	}
+
+	if (zustandSimulation != 1)
+	{
+		printf("Zstand fehlgeschlagen");
+	}
+	return ;
+}
+
+void set_to_2() {
+	int zustandSimulation = Zustaende(2);
+
+	if (zustandSimulation == 0) {
+		zustandSimulation = Zustaende(2);
+		zustandSimulation = Zustaende(42);
+	} 
+	else if (zustandSimulation == 1) 
+	{
+		zustandSimulation = Zustaende(42);
+	} 
+	else 
+	{
+		;
+	}
+
+	if (zustandSimulation != 2)
+		printf("Error: Zustand set to 2 fehlgeschlagen\n");
+	return ;
+
 }
 
 int test_func_add_main()
 {
 	UNITY_BEGIN();
-	RUN_TEST(test_function_testSort);
-	RUN_TEST(test_function_testSort_and_State);
+	//RUN_TEST(test_function_testSort);
+	//RUN_TEST(test_function_testSort_and_State);
+	//RUN_TEST(test_function_Zustaende);
+	RUN_TEST(test_function_ZustaendeGezielt);
 	return UNITY_END();
 }

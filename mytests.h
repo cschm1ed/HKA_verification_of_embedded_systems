@@ -20,5 +20,7 @@ int *func_sortThreeNumbers_state(int a, int b, int c, int *a_smallest, int *b_sm
 int test_func_add_main();
 char *my_srtdup(char *src);
 int Zustaende(int input);
+void set_to_1();
+void set_to_2();
 
 #endif
